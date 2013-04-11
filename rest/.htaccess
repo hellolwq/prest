@@ -1,0 +1,7 @@
+<IfModule mod_rewrite.c>
+RewriteEngine On
+RewriteBase /rest
+RewriteCond %{REQUEST_URI} !rest\.php$
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteRule .* /rest.php [L,QSA]
+</IfModule>

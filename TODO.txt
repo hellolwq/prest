@@ -1,0 +1,26 @@
+2013.4.5
+1.权限检查，die换用抛出异常的方式，由最外层处理。
+2.模仿tonic作法，使用注释来描述参数类型、返回值、返回格式，入口处统一作检查。缓存方法的信息以序列化的方式在磁盘、内存处进行加速。
+3.函数返回值增加response类进行处理，返回状态码改成真实的HTTP状态。
+4.未授权是401，权限不够是403。
+5.提供钩子函数？现在有这必要？
+6.每个方法使用注释控制http cache时间。（重要！！！）
+7.确认$_SERVER['PHP_AUTH_PW']) 保存帐号信息的做法。
+8.DEMO中移除对数据库的依赖，保留user.php方法。
+9.当前使用class/method的方法固定死了与url之间的绑定关系，做到自定义url？
+10.htaccess文件的做法要求每个请求都状态.htaccess，性能上有损耗，需要优化。
+11.可以根据客户端请求(application/xml,application/json)和querystring参数等由客户端选择输出内容的方式。
+12.参考.htaccess写法
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteCond %{REQUEST_URI} !dispatch\.php$
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteRule .* dispatch.php [L,QSA]
+</IfModule>
+
+2013.04.06
+提供动态配置：
+13、自定义path与类方法关联
+14、动态配置方法的缓存。
+15、动态配置方法权限。
+16、动态生成API接口代码。
