@@ -2,3 +2,60 @@ prest
 =====
 
 light weight php rest framework
+
+特性描述：
+本API目前测试的是Linux+Apache+Mysql+PHP环境，其它环境暂时没有测试。
+1、api与类方法一一对应，方便快速添加。
+2、支持api类方法参数检查。
+3、支持权限检查。
+4、支持ticket生成、校验，可防止被中间人盗用。
+5、支持API自定义缓存时间。
+6、继承restdb可使用默认数据库方法。
+
+一、配置Apache支持.htaccess文件
+<Directory /.../rest/ >
+  AllowOverride All
+	Options FollowSymLinks
+</Directory>
+
+二、配置rest/inc/config.php
+
+三、使用rest.sql建立数据库
+1、登录帐号http://host/rest/user/login?uname=test&passwd=test
+2、测试其它接口http://host/rest/user/add?uname=test&passwd=test
+
+
+四、添加接口
+在rest/handlers目录添加对应类文件和静态方法即可。
+比如，需要添加http://host/rest/foo/test?arg1=xxx&arg2=xxx&xxx接口。
+参数目前可以通过querystring或是post方式传入。
+添加foo.php文件
+类
+<?php
+class foo{
+public function test($arg1,$arg2...)
+{
+	auth::check_permission(ROLE_ADMIN);/*检查该方法要求的权限*/
+	#logic about $obj
+	....
+	return new response(array('body'=>$obj,'cache'=>'5'));
+}
+}
+目前返回对象支持：
+body:返回正文对象，可以是任何的变量，将转换成json格式返回。
+cache:缓存秒数，默认为无缓存。
+header:自定义头部对象，里面是key=>value对的数组。
+code:返回的http状态码。
+五、自定义路径映射
+修改config.php变量，加入映射关系。
+$g_maps = array(
+...,
+'/abc/test'=>array(
+	'class'=>'foo',
+	'method'=>'test'
+)
+)
+
+TODO LIST
+1、按http规范，对有副作用影响接口强制要求使用POST/DELETE/PUT 等方法。
+2、补充功能函数，目前只添加了对mysql数据库的基本操作。
