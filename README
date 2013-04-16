@@ -54,3 +54,6 @@ $g_maps = array(
 TODO LIST
 1、按http规范，对有副作用影响接口强制要求使用POST/DELETE/PUT 等方法。
 2、补充功能函数，目前只添加了对mysql数据库的基本操作。
+
+作者：顶烁科技
+网址：http://www.etopshine.com
